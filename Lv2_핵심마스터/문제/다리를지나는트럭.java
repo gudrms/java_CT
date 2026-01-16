@@ -127,3 +127,19 @@ class 다리를지나는트럭 {
 
 
 }
+
+
+/*
+* while (!bridge.isEmpty()) {
+    time++;                          // 1초 증가
+
+    int exitTruck = bridge.poll();   // 앞차 빠짐
+    currentWeight -= exitTruck;      // 무게 감소
+
+    // 새 트럭이 들어갈 수 있나?
+    if (대기트럭 있고 && 무게 OK) {
+        bridge.offer(새트럭);          // 들어감
+    } else {
+        bridge.offer(0);              // 못 들어가면 빈칸
+    }
+}*/
