@@ -40,46 +40,90 @@ import java.util.*;
 
 class 다리를지나는트럭 {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        int answer = 0;
+        // 경과 시간을 저장하는 변수
+        int time = 0;
 
-        Queue<Integer> truck = new LinkedList<>();
-        Queue<Integer> move = new LinkedList<>();
-// 트럭큐 만들기
-        for(int i =0; i< truck_weights.length; i++){
-            truck.offer(i);
+        // 대기 중인 트럭들을 관리하는 큐 (트럭의 무게를 저장)
+        Queue<Integer> waitingTrucks = new LinkedList<>();
+        for (int truckWeight : truck_weights) {
+            waitingTrucks.offer(truckWeight);
         }
-// 트럭 큐가 빌때까지 반복
-        while(!truck.isEmpty()){
-//         트럭큐에서 하나씩 뺌
-            int currentTruck = truck.poll();
-//             현재트럭이 허용 무게 보다 작거나 같으면
-            while(currentTruck <= weight) {
-//             이동 큐에 넣음
-                move.offer(currentTruck);
 
+        // 다리 위의 트럭들을 관리하는 큐 (다리 길이만큼 0으로 초기화)
+        // 0은 빈 공간을 의미, 트럭 무게가 들어가면 해당 위치에 트럭이 있음을 의미
+        Queue<Integer> bridge = new LinkedList<>();
+        for (int i = 0; i < bridge_length; i++) {
+            bridge.offer(0);
+        }
+
+        // 현재 다리 위에 있는 트럭들의 총 무게
+        int currentWeight = 0;
+
+        // 모든 트럭이 다리를 건널 때까지 반복
+        while (!bridge.isEmpty()) {
+            // 1초 경과
+            time++;
+
+            // 다리의 맨 앞 칸이 이동 (트럭이 있었다면 다리를 완전히 건넌 것)
+            int exitTruck = bridge.poll();
+            currentWeight -= exitTruck;
+
+            // 대기 중인 트럭이 있는 경우
+            if (!waitingTrucks.isEmpty()) {
+                // 다음 트럭이 다리에 올라갈 수 있는지 확인
+                // 조건: 현재 다리 위 무게 + 다음 트럭 무게 <= 다리가 견딜 수 있는 무게
+                if (currentWeight + waitingTrucks.peek() <= weight) {
+                    // 다음 트럭을 다리에 올림
+                    int enterTruck = waitingTrucks.poll();
+                    bridge.offer(enterTruck);
+                    currentWeight += enterTruck;
+                } else {
+                    // 트럭이 올라갈 수 없으면 빈 공간(0)을 추가
+                    // 이렇게 하면 다리 위의 트럭들이 한 칸씩 앞으로 이동하는 효과
+                    bridge.offer(0);
+                }
             }
-
+            // 대기 트럭이 없고 다리 위에만 트럭이 있는 경우
+            // bridge가 빌 때까지 반복하면서 시간이 자동으로 증가
         }
-        /*
 
-        truck_weights q를 만들고
-        다리를 지나는 q 를만들고
-
-
-
-
-        첫 트럭과 다음 트럭의 무게를 더한게 weight 보다 작은지 판단
-        작다면 첫트럭과 다음트럭과 다음 더한게 weight 보다 작은지 판단  while 문으로 계속 반복
-        크다면 offer로 다시 넣고
-         return 으로 마지막 초를 넘김
-
-
-
-
-
-         */
-        return answer;
+        return time;
     }
+
+    /*
+     * 문제 풀이 접근 방법:
+     *
+     * 1. 핵심 아이디어:
+     *    - 다리를 큐로 모델링 (길이가 bridge_length인 큐)
+     *    - 매 초마다 다리의 맨 앞 트럭이 빠져나가고, 새로운 트럭이 뒤에서 들어옴
+     *    - 0을 사용해서 다리 위의 빈 공간을 표현
+     *
+     * 2. 시뮬레이션 과정:
+     *    - 시간을 1초씩 증가시키면서 다음을 반복:
+     *      a) 다리의 맨 앞 요소를 제거 (트럭이 다리를 벗어남)
+     *      b) 현재 다리 무게 갱신
+     *      c) 대기 중인 트럭이 올라갈 수 있으면 올리고, 아니면 0(빈 공간) 추가
+     *
+     * 3. 예제 추적 (bridge_length=2, weight=10, truck_weights=[7,4,5,6]):
+     *    time=0: bridge=[0,0], waiting=[7,4,5,6], currentWeight=0
+     *    time=1: bridge=[0,7], waiting=[4,5,6], currentWeight=7
+     *    time=2: bridge=[7,0], waiting=[4,5,6], currentWeight=7
+     *    time=3: bridge=[0,4], waiting=[5,6], currentWeight=4 (7이 빠짐)
+     *    time=4: bridge=[4,5], waiting=[6], currentWeight=9
+     *    time=5: bridge=[5,0], waiting=[6], currentWeight=5 (4가 빠짐)
+     *    time=6: bridge=[0,6], waiting=[], currentWeight=6 (5가 빠짐)
+     *    time=7: bridge=[6,0], waiting=[], currentWeight=6
+     *    time=8: bridge=[0,0], waiting=[], currentWeight=0 (6이 빠짐)
+     *    -> 답: 8초
+     *
+     * 4. 시간 복잡도: O(N * bridge_length)
+     *    - N: 트럭의 개수
+     *    - 각 트럭마다 최대 bridge_length만큼 시간이 소요
+     *
+     * 5. 공간 복잡도: O(N + bridge_length)
+     *    - 대기 큐: O(N)
+     *    - 다리 큐: O(bridge_length)
+     */
 
 
 }
