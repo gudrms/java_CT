@@ -40,55 +40,113 @@ import java.util.*;
 
 class 다리를지나는트럭 {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        // 경과 시간을 저장하는 변수
+
+//       대기중인 트럭 q
+//        다리위 q
+        Queue<Integer> wateTruck = new LinkedList<>();
         int time = 0;
-        // 대기 중인 트럭들을 관리하는 큐 (트럭의 무게를 저장)
-        Queue<Integer> waitingTrucks = new LinkedList<>();
-        for (int truckWeight : truck_weights) {
-            waitingTrucks.offer(truckWeight);
+        Queue<Integer> brigde = new LinkedList<>();
+
+        for(int truckWeight : truck_weights){
+            wateTruck.offer(wateTruck);
         }
+
+        for (int i = 0; i < bridge_length; i++) {
+            brigde.offer(0);
+        }
+
+        int currentWeight = 0;
+
+        while(!brigde.isEmpty()){
+            time++;
+            int exitTruck = brigde.poll();
+            currentWeight -= exitTruck
+
+                if(!wateTruck.isEmpty()){
+                    if(currentWeight+wateTruck.peek() <= weight){
+                        int enterTruck = wateTruck.poll();
+                        brigde.offer(enterTruck);
+                        currentWeight+= enterTruck;
+
+                    }else{
+                        brigde.offer(0);
+                    }
+                }
+
+
+
+
+        }
+        return time;
+//
+//        int time = 0;
+//
+//        Queue<Integer> watingTrucks = new LinkedList<>()
+//        for(int truckWeigth : truck_weights){
+//            watingTrucks.offer(truckWeigth)
+//        }
+//
+//        Queue<Integer> bridge = new LinkedList<>();
+//        for (int i = 0; i < bridge_length; i++) {
+//            bridge.offer(0);
+//        }
+//
+//        int currentWeight = 0;
+//
+//        while (!watingTrucks.isEmpty()) {
+//            time++;
+//
+//            int exitTruck = bridge.poll();
+//            currentWeight -= exitTruck;
+//
+//            // Adds truck to bridge if weight allows
+//            if (!watingTrucks.isEmpty()) {
+//                if (currentWeight + watingTrucks.peek() <= weight) {
+//                    int enterTruck = watingTrucks.poll();
+//                    currentWeight += enterTruck;
+//                } else {
+//                    bridge.offer(0);
+//                }
+//            }
+//        }
+//
+//        return time;
+
+
+
+
+
+    }
+}
+        // 경과 시간을 저장하는 변수
+
+        // 대기 중인 트럭들을 관리하는 큐 (트럭의 무게를 저장)
 
 
         // 다리 위의 트럭들을 관리하는 큐 (다리 길이만큼 0으로 초기화)
         // 0은 빈 공간을 의미, 트럭 무게가 들어가면 해당 위치에 트럭이 있음을 의미
-        Queue<Integer> bridge = new LinkedList<>();
-        for (int i = 0; i < bridge_length; i++) {
-            bridge.offer(0);
-        }
 
         // 현재 다리 위에 있는 트럭들의 총 무게
-        int currentWeight = 0;
 
         // 모든 트럭이 다리를 건널 때까지 반복
-        while (!bridge.isEmpty()) {
             // 1초 경과
-            time++;
 
             // 다리의 맨 앞 칸이 이동 (트럭이 있었다면 다리를 완전히 건넌 것)
-            int exitTruck = bridge.poll();
-            currentWeight -= exitTruck;
+
 
             // 대기 중인 트럭이 있는 경우
-            if (!waitingTrucks.isEmpty()) {
                 // 다음 트럭이 다리에 올라갈 수 있는지 확인
                 // 조건: 현재 다리 위 무게 + 다음 트럭 무게 <= 다리가 견딜 수 있는 무게
-                if (currentWeight + waitingTrucks.peek() <= weight) {
                     // 다음 트럭을 다리에 올림
-                    int enterTruck = waitingTrucks.poll();
-                    bridge.offer(enterTruck);
-                    currentWeight += enterTruck;
-                } else {
+
                     // 트럭이 올라갈 수 없으면 빈 공간(0)을 추가
                     // 이렇게 하면 다리 위의 트럭들이 한 칸씩 앞으로 이동하는 효과
-                    bridge.offer(0);
-                }
-            }
+
             // 대기 트럭이 없고 다리 위에만 트럭이 있는 경우
             // bridge가 빌 때까지 반복하면서 시간이 자동으로 증가
-        }
 
-        return time;
-    }
+
+
 
     /*
      * 문제 풀이 접근 방법:
@@ -126,7 +184,7 @@ class 다리를지나는트럭 {
      */
 
 
-}
+
 
 
 /*
