@@ -118,6 +118,20 @@ public class 소수찾기8 {
             }
             return true;
         }
+
+
+        private boolean isPrime4(int n){
+            if(n < 2){
+                return false;
+            }
+
+            for(int i =2; i<=Math.sqrt(n);i++){
+                if(n%2 ==0){
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     public static void main(String[] args) {
