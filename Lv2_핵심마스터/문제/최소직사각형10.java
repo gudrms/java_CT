@@ -81,13 +81,8 @@ public class 최소직사각형10 {
 class SolutionPractice {
     public int solution(int[][] sizes) {
         // 1. 최대 가로와 최대 세로를 저장할 변수 선언 (0으로 초기화)
-        int maxWidth = 0;
-        int maxHeight = 0;
 
         // 2. sizes 배열을 반복문(for-each)으로 순회
-        for (int[] size:sizes){
-            int w = ;
-        }
 
         // 3. 현재 명함에서 큰 값과 작은 값을 구분
         //    int w = Math.max(..., ...);
