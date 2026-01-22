@@ -65,24 +65,33 @@ class SolutionPractice {
   public String solution(int[] numbers) {
     // 1. 숫자를 문자열로 변환하여 담을 String 배열을 생성하고 값을 채웁니다.
     //    (힌트: String.valueOf() 사용)
+    String[] strNumbers = new String[numbers.length];
 
+    for (int i = 0; i < numbers.length; i++) {
+      strNumbers[i] = String.valueOf(numbers[i]);
+    }
 
     // 2. 정렬 로직을 구현합니다. (Arrays.sort 사용)
     //    커스텀 정렬 기준: 두 문자열 a, b를 합쳤을 때 (b+a)와 (a+b) 중 큰 쪽이 앞으로 오도록!
     //    (힌트: (o1, o2) -> (o2 + o1).compareTo(o1 + o2))
-
+    Arrays.sort(strNumbers, (a,b) -> (b+a).compareTo(a+b));
 
     // 3. 정렬 후 첫 번째 숫자가 "0"인지 확인합니다.
     //    가장 큰 숫자가 "0"이라면 뒤의 숫자들도 모두 "0"일 것이므로 "0"을 반환합니다.
     //    (예외 처리: [0, 0, 0] -> "0")
 
-
+    if(strNumbers[0].equals("0")){
+      return "0";
+    }
     // 4. 정렬된 문자열들을 순서대로 하나로 합칩니다.
     //    (힌트: 효율성을 위해 StringBuilder를 사용하세요.)
-
+    StringBuilder answer = new StringBuilder();
+    for(String str : strNumbers){
+      answer.append(str);
+    }
 
     // 5. 최종 결과 문자열을 반환합니다.
-    return ""; // 여기에 결과 변수를 넣어주세요.
+    return answer.toString(); // 여기에 결과 변수를 넣어주세요.
   }
 }
 
