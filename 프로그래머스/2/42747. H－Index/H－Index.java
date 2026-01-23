@@ -6,9 +6,9 @@ class Solution {
         int n = citations.length;
         Arrays.sort(citations);
         
-        for(int i = 0; i < n;i++){
+        for(int i =0; i<n;i++){
             int h = Math.min(citations[i],n-i);
-            answer = Math.max(answer,h);
+                answer = Math.max(answer, h);
         }
         
         return answer;
