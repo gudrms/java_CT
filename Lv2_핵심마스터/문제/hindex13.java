@@ -45,15 +45,21 @@ class Solution {
         public int solution(int[] citations) {
             // 1) citations 오름차순 정렬
 
+            Arrays.sort(citations);
+
             // 2) n = citations.length, answer = 0 준비
+            int n = citations.length;
+            int answer = 0;
 
             // 3) i를 0부터 n-1까지 반복
-            //    - papers = n - i  (i번째부터 끝까지 논문 수)
-            //    - h = min(citations[i], papers)
-            //    - answer = max(answer, h)
+            for (int i = 0; i < n; i++) {
+                int h = Math.min(citations[i], n - i);
+            }
+            // 2) i번째 논문을 "기준"으로 잡으면
+            //    - citations[i] 이상 인용된 논문 수는 (i 포함해서 뒤에 있는 개수) = n - i
+            //    - 가능한 h는 "인용수"와 "논문수" 중 작은 값
 
-            // 4) answer 반환
-            return 0; // TODO: 완성 후 수정
+            return answer; // TODO: 완성 후 수정
         }
     }
 
